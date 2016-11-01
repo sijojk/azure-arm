@@ -16,11 +16,8 @@
         "Premium"
       ],
       "metadata": {
-<<<<<<< HEAD
         "description": "Service Tier: Free, Standard, or Premium only supported"
-=======
         "description": "Service Tier: Free, Standard, or Premium"
->>>>>>> 537e2f4f837dbf760876cc9d07891e1547615fa6
       }
     },
     "location": {
