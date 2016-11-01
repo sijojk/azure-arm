@@ -16,7 +16,11 @@
         "Premium"
       ],
       "metadata": {
+<<<<<<< HEAD
+        "description": "Service Tier: Free, Standard, or Premium only supported"
+=======
         "description": "Service Tier: Free, Standard, or Premium"
+>>>>>>> 537e2f4f837dbf760876cc9d07891e1547615fa6
       }
     },
     "location": {
@@ -57,15 +61,30 @@
     "SQLAssessment": {
       "Name": "[Concat('SQLAssessment', '(', parameters('workspaceName'), ')')]",
       "GalleryName": "SQLAssessment"
-    },
-    "diagnosticsStorageAccount": "[resourceId(parameters('applicationDiagnosticsStorageAccountResourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('applicationDiagnosticsStorageAccountName'))]"
+    }
   },
   "resources": [
+				{
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('applicationDiagnosticsStorageAccountName')]",
+      "apiVersion": "2016-01-01",
+      "location": "[resourceGroup().location]",
+      "sku": {
+          "name": "Standard_GRS"
+      },
+      "kind": "Storage", 
+      "properties": {
+      }
+    },
     {
       "apiVersion": "2015-11-01-preview",
       "type": "Microsoft.OperationalInsights/workspaces",
       "name": "[parameters('workspaceName')]",
       "location": "[parameters('location')]",
+	  "dependsOn":
+	  [
+	  "[concat('Microsoft.Storage/storageAccounts/',parameters('applicationDiagnosticsStorageAccountName'))]"
+	  ]
       "properties": {
         "sku": {
           "Name": "[parameters('serviceTier')]"
@@ -291,8 +310,8 @@
               "WADWindowsEventLogsTable"
             ],
             "storageAccount": {
-              "id": "[variables('diagnosticsStorageAccount')]",
-              "key": "[listKeys(variables('diagnosticsStorageAccount'),'2015-06-15').key1]"
+              "id": "[resourceId(parameters('applicationDiagnosticsStorageAccountResourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('applicationDiagnosticsStorageAccountName'))]",
+              "key": "[listKeys(resourceId(parameters('applicationDiagnosticsStorageAccountResourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('applicationDiagnosticsStorageAccountName')),'2015-06-15').key1]"
             }
           }
         },
