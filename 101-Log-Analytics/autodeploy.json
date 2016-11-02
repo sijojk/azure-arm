@@ -16,7 +16,7 @@
         "Premium"
       ],
       "metadata": {
-        "description": "Service Tier: Free, Standard, or Premium only supported"
+        "description": "Service Tier: Free, Standard, or Premium"
       }
     },
     "location": {
@@ -80,7 +80,7 @@
 	  "dependsOn":
 	  [
 	  "[concat('Microsoft.Storage/storageAccounts/',parameters('applicationDiagnosticsStorageAccountName'))]"
-	  ]
+	  ],
       "properties": {
         "sku": {
           "Name": "[parameters('serviceTier')]"
